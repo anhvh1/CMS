@@ -1,4 +1,4 @@
-import { Modal, Table, Tooltip, message, Pagination, Flex } from "antd";
+import { Modal, Table, Tooltip, message, Pagination, Flex, Spin } from "antd";
 import actions from "../../../../../redux/DanhMuc/ContentThietBi/actions";
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
@@ -51,6 +51,8 @@ const QuanLyManHinh = (props) => {
   const [selectedRowsKey, setSelectedRowsKey] = useState([]);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [requestType, setrequestType] = useState();
+
   const pageSize = 3; // Number of items per page
 
   document.title = "Quản Lý Màn Hình";
@@ -108,10 +110,47 @@ const QuanLyManHinh = (props) => {
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
+  const ChupAnh = (data) => {
+    api
+      .ChupAnh({ HardwareKey: data })
+      .then((response) => {
+        if (response.data.Status >= 0) {
+          message.destroy();
+          message.success(response.data.Message);
+          if (requestType === 4) {
+            setfetchData(4);
+          }
+        } else {
+          message.error(response.data.Message);
+        }
+      })
+      .catch((error) => {
+        Modal.error(Constants.API_ERROR);
+      });
+  };
   return (
     <LayoutWrapper>
-      <PageWrap>
-        <PageAction>
+      <Box>
+        <BoxFilter style={{ display: "flex", justifyContent: "space-between" }}>
+          <div>
+            <Select
+              allowClear
+              style={{ width: "200px", marginRight: "10px" }}
+              // defaultValue={filterData.LoaiSuKien}
+              placeholder={"Nhóm thiết bị"}
+              onChange={(value) => onFilter(value, "Status")}
+            >
+              <Option value={true}>Đang sử dụng</Option>
+              <Option value={false}>Không sử dụng</Option>
+            </Select>
+            <InputSearch
+              defaultValue={filterData?.Keyword}
+              placeholder={"Tìm kiếm"}
+              style={{ width: 300 }}
+              onSearch={(value) => onFilter(value, "Keyword")}
+              allowClear
+            />
+          </div>
           <div style={{ display: "flex" }} onClick={showModalAdd}>
             <SettingIcon />
             <div
@@ -127,27 +166,6 @@ const QuanLyManHinh = (props) => {
               Quản lý nhóm thiết bị
             </div>
           </div>
-        </PageAction>
-      </PageWrap>
-      <Box>
-        <BoxFilter>
-          <Select
-            allowClear
-            style={{ width: "200px" }}
-            // defaultValue={filterData.LoaiSuKien}
-            placeholder={"Nhóm thiết bị"}
-            onChange={(value) => onFilter(value, "Status")}
-          >
-            <Option value={true}>Đang sử dụng</Option>
-            <Option value={false}>Không sử dụng</Option>
-          </Select>
-          <InputSearch
-            defaultValue={filterData?.Keyword}
-            placeholder={"Tìm kiếm"}
-            style={{ width: 300 }}
-            onSearch={(value) => onFilter(value, "Keyword")}
-            allowClear
-          />
         </BoxFilter>
       </Box>
       <ContentTable>
@@ -170,14 +188,35 @@ const QuanLyManHinh = (props) => {
                         year: "numeric",
                       })}
                     </div>
-
                     <div className="table-columns-left-img">
-                      {" "}
-                      <div className="table-columns-left-no"></div>
+                      {item.isLoading & (requestType == 0) ? (
+                        <Spin />
+                      ) : (
+                        <img
+                          className="table-columns-left-no"
+                          src={item.urlFile}
+                          alt="ảnh thiết bị"
+                        />
+                      )}
                     </div>
                     <div className="table-columns-left-bottom">
-                      {" "}
-                      <CameraIcon />
+                      <CameraIcon
+                        onClick={() => {
+                          if (!item.trangThai) return;
+
+                          console.log("index", index);
+                          setrequestType(0);
+                          item.isLoading = true;
+
+                          ChupAnh(item.hardwareKey);
+                        }}
+                        disabled={!item.trangThai}
+                        className={`${
+                          item.trangThai
+                            ? "cursor-pointer hover:text-blue-500"
+                            : "cursor-not-allowed opacity-50"
+                        }`}
+                      />
                     </div>
                   </div>
                   <div className="table-columns-right">
@@ -186,6 +225,7 @@ const QuanLyManHinh = (props) => {
                         style={{
                           display: "flex",
                           justifyContent: "space-between",
+                          marginBottom: "5px",
                         }}
                       >
                         <h2>{item.tenManHinh}</h2>
@@ -209,28 +249,32 @@ const QuanLyManHinh = (props) => {
                           </div>
                         </Tooltip>
                       </div>
-                      <div
+                      {/* <div
                         style={{
                           display: "flex",
                           justifyContent: "space-between",
                         }}
-                      >
-                        <h3 style={{ color: item.trangThai ? "green" : "red" }}>
-                          {item.trangThai ? "Hoạt động" : "Tạm ngừng"}
-                        </h3>
-
-                        {item.diaChi && item.diaChi.length > 0 && (
-                          <h3>
-                            {item.diaChi}
-                            <PositioningIcon />
-                          </h3>
-                        )}
-                      </div>
+                      ></div> */}
                     </div>
                     <div className="table-columns-bottom">
                       <div className="table-columns-content">
                         <strong>Hardwarekey:</strong>
                         <span>{item.hardwareKey || "-"}</span>
+                      </div>
+                      <div className="table-columns-content">
+                        <strong>Địa chỉ:</strong>
+                        {item.diaChi && item.diaChi.length > 0 && (
+                          <h3 style={{ display: "flex" }}>
+                            {item.diaChi}
+                            <PositioningIcon style={{ marginLeft: "5px" }} />
+                          </h3>
+                        )}
+                      </div>
+                      <div className="table-columns-content">
+                        <strong>Trạng thái:</strong>
+                        <h3 style={{ color: item.trangThai ? "green" : "red" }}>
+                          {item.trangThai ? "Hoạt động" : "Tạm ngừng"}
+                        </h3>
                       </div>
                       <div className="table-columns-content">
                         <strong>Địa chỉ mac: </strong>{" "}
@@ -271,6 +315,7 @@ const QuanLyManHinh = (props) => {
           filterData={filterData}
           setfetchData={setfetchData}
           fetchData1={fetchData}
+          setrequestType={setrequestType}
         ></SlideViewer>
 
         <Pagination

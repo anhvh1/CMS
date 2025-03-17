@@ -22,8 +22,10 @@ export const StyledButton = styled.div`
   }
 `;
 export const Layout = styled.div`
-  padding: 50px 50px 0px 50px;
+  padding: 0pc 0px 20px 0px;
+  
 `;
 export const MenuContent = styled.div`
   display: flex;
+  margin-bottom: 20px;
 `;

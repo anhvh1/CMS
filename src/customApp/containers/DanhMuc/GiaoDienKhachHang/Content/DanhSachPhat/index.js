@@ -91,9 +91,10 @@ const QLThuVien = (props) => {
   const deleteModalAddEdit = (DanhSachPhatID) => {
     Modal.confirm({
       title: "Xóa Dữ Liệu",
-      content: "Bạn có muốn xóa chức vụ này không?",
+      content: "Bạn có muốn xóa danh sách phát này không?",
       cancelText: "Không",
       okText: "Có",
+     
       onOk: () => {
         setConfirmLoading(true);
         api
@@ -347,12 +348,7 @@ const QLThuVien = (props) => {
                 <PlusOutlined />
                 Thêm mới
               </Button> */}
-          <div
-            style={{ color: "white", cursor: "context-menu" }}
-            onClick={showModalAdd}
-          >
-            <PlusOutlined /> Thêm mới
-          </div>
+         
           {/* ) : (
               ''
             )
@@ -362,7 +358,7 @@ const QLThuVien = (props) => {
         </PageAction>
       </PageWrap>
       <Box>
-        <BoxFilter>
+        <BoxFilter style={{ display: "flex", justifyContent: "space-between" }}>
           <InputSearch
             defaultValue={filterData.Keyword}
             placeholder={"Nhập tên danh sách phát"}
@@ -370,6 +366,12 @@ const QLThuVien = (props) => {
             onSearch={(value) => onFilter(value, "Keyword")}
             allowClear
           />
+           <div
+            style={{ color: "white", cursor: "context-menu" }}
+            onClick={showModalAdd}
+          >
+            <PlusOutlined /> Thêm mới
+          </div>
         </BoxFilter>
         <BoxTable
           columns={columns}

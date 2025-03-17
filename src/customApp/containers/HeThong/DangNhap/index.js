@@ -243,7 +243,7 @@ const SignIn = (props) => {
         <div className="header">
           <div className="header-title">
             <img src={ImageLogo} className="header-logo" />
-            <p>{Title}</p>
+            <p style={{color:"#000000"}}>{Title}</p>
           </div>
         </div>
         <div className="main">
@@ -305,8 +305,8 @@ const SignIn = (props) => {
                         onClick={togglePasswordVisibility}
                         style={{
                           position: "absolute",
-                          right: "30px", // Điều chỉnh khoảng cách từ biểu tượng đến mép phải của ô input
-                          top: "42.5%",
+                          right: "30px", 
+                          top: "34.5%",
                           transform: "translateY(-50%)",
                         }}
                       >
