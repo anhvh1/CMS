@@ -30,6 +30,7 @@ import {
   Image,
 } from "antd";
 import Button from "../../../../../../components/uielements/button";
+import { BoxFilterWrap } from "./styled";
 import {
   changeUrlFilter,
   getFilterData,
@@ -693,22 +694,27 @@ const ContentMedia = (props) => {
   };
   return (
     <LayoutWrapper>
-      <PageWrap>
+      {/* <PageWrap>
         <PageAction>{role?.add ? renderActionAdd() : ""}</PageAction>
         <PageAction>
-          {/* {role ? role.add ?  */}
-
-          {/* //  : '' : ''} */}
+    
         </PageAction>
-      </PageWrap>
+      </PageWrap> */}
       <Box>
-        <BoxFilter style={{ display: "flex", justifyContent: "space-between" }}>
-          <div>
+        <BoxFilter
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            gap: 15,
+            alignItems: "center",
+          }}
+        >
+          <BoxFilterWrap className="wrapper-filter">
             <Select
               defaultValue={filterData?.Loai ? filterData?.Loai : null}
               placeholder="Loại"
               onChange={(value) => onFilter(value, "Loai")}
-              style={{ width: 200,marginRight: "10px"  }}
+              style={{ width: 200 }}
               allowClear
             >
               <Option value={1}>Hình ảnh</Option>
@@ -718,7 +724,7 @@ const ContentMedia = (props) => {
               defaultValue={filterData?.Status ? filterData?.Status : null}
               placeholder="Trạng thái"
               onChange={(value) => onFilter(value, "Status")}
-              style={{ width: 200,marginRight: "10px"  }}
+              style={{ width: 200 }}
             >
               <Option value={true}>Đang sử dụng</Option>
               <Option value={false}>Không sử dụng</Option>
@@ -728,9 +734,10 @@ const ContentMedia = (props) => {
               defaultValue={filterData?.Keyword}
               placeholder="Tìm kiếm theo tên "
               onSearch={(value) => onFilter(value, "Keyword")}
-              style={{ width: 300 }}
+              style={{ width: 410 }}
+              className="input-search"
             />
-          </div>
+          </BoxFilterWrap>
           <div
             style={{ color: "white", cursor: "context-menu" }}
             onClick={showModalAddMedia}
@@ -827,8 +834,7 @@ const ContentMedia = (props) => {
                     </div>
                     <div className="table-columns-left-bottom">
                       <div className="table-columns-text-ten">
-                        {item.TenFile} {" "}
-                        {item.KichThuoc}
+                        {item.TenFile} {item.KichThuoc}
                       </div>
                       <div className="table-columns-text"></div>
                       {/* <Switch

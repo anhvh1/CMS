@@ -287,4 +287,24 @@ const layout = {
   },
 };
 
+export const BoxFilterWrap = styled.div`
+  display: flex;
+  gap: 10px;
+  @media screen and (max-width: 930px) {
+    width: 100%;
+    flex-wrap: wrap;
+    & > * {
+      flex-basis: calc(50% - 5px);
+    }
+    .input-search {
+      flex-basis: 100%;
+    }
+  }
+  @media only screen and (max-width: 420px) {
+    & > * {
+      flex-basis: 100%;
+    }
+  }
+`;
+
 export default layout;

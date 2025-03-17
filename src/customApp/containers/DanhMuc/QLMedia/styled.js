@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const RedTree = styled.div`
   .ant-tree
@@ -86,7 +86,7 @@ const layout = {
       lg: 21,
       xl: 21,
     },
-    labelAlign: 'left',
+    labelAlign: "left",
   },
   formItem2: {
     labelCol: {
@@ -103,7 +103,7 @@ const layout = {
       lg: 18,
       xl: 18,
     },
-    labelAlign: 'left',
+    labelAlign: "left",
   },
   formItem3: {
     labelCol: {
@@ -173,3 +173,9 @@ const layout = {
 };
 
 export default layout;
+
+export const WrapperContent = styled.div`
+  display: grid;
+  grid-template-columns: 200px auto;
+  gap: 15px;
+`;

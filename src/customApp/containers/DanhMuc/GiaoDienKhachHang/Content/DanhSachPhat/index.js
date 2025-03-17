@@ -34,7 +34,7 @@ import {
   EditOutlined,
   PlusOutlined,
   FieldTimeOutlined,
-  SettingOutlined
+  SettingOutlined,
 } from "@ant-design/icons";
 import PageWrap from "../../../../../../components/utility/PageWrap";
 const QLThuVien = (props) => {
@@ -94,7 +94,7 @@ const QLThuVien = (props) => {
       content: "Bạn có muốn xóa danh sách phát này không?",
       cancelText: "Không",
       okText: "Có",
-     
+
       onOk: () => {
         setConfirmLoading(true);
         api
@@ -245,7 +245,7 @@ const QLThuVien = (props) => {
         {/* {role?.edit ? ( */}
         <Tooltip title={"Sửa"}>
           <EditOutlined onClick={() => showModalEdit(record.DanhSachPhatID)} />
-        </Tooltip> {" "}
+        </Tooltip>{" "}
         {/* ) : ( */}
         {/* '' */}
         {/* )} */}
@@ -254,7 +254,7 @@ const QLThuVien = (props) => {
           <DeleteOutlined
             onClick={() => deleteModalAddEdit(record.DanhSachPhatID)}
           />
-        </Tooltip> {" "}
+        </Tooltip>{" "}
         {/* ) : (
           ''
         )} */}
@@ -348,7 +348,7 @@ const QLThuVien = (props) => {
                 <PlusOutlined />
                 Thêm mới
               </Button> */}
-         
+
           {/* ) : (
               ''
             )
@@ -358,7 +358,14 @@ const QLThuVien = (props) => {
         </PageAction>
       </PageWrap>
       <Box>
-        <BoxFilter style={{ display: "flex", justifyContent: "space-between" }}>
+        <BoxFilter
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            gap: 15,
+            alignItems: "center",
+          }}
+        >
           <InputSearch
             defaultValue={filterData.Keyword}
             placeholder={"Nhập tên danh sách phát"}
@@ -366,7 +373,7 @@ const QLThuVien = (props) => {
             onSearch={(value) => onFilter(value, "Keyword")}
             allowClear
           />
-           <div
+          <div
             style={{ color: "white", cursor: "context-menu" }}
             onClick={showModalAdd}
           >

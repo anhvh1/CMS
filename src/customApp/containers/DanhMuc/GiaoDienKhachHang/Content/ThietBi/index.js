@@ -130,45 +130,54 @@ const QuanLyManHinh = (props) => {
   };
   return (
     <LayoutWrapper>
-      <Box>
-        <BoxFilter style={{ display: "flex", justifyContent: "space-between" }}>
-          <div>
-            <Select
-              allowClear
-              style={{ width: "200px", marginRight: "10px" }}
-              // defaultValue={filterData.LoaiSuKien}
-              placeholder={"Nhóm thiết bị"}
-              onChange={(value) => onFilter(value, "Status")}
-            >
-              <Option value={true}>Đang sử dụng</Option>
-              <Option value={false}>Không sử dụng</Option>
-            </Select>
-            <InputSearch
-              defaultValue={filterData?.Keyword}
-              placeholder={"Tìm kiếm"}
-              style={{ width: 300 }}
-              onSearch={(value) => onFilter(value, "Keyword")}
-              allowClear
-            />
-          </div>
-          <div style={{ display: "flex" }} onClick={showModalAdd}>
-            <SettingIcon />
-            <div
-              style={{
-                fontSize: "20px",
-                fontWeight: 600,
-                color: "#FFFFFF",
-                marginTop: "5px",
-                marginLeft: "10px",
-                cursor: "context-menu",
-              }}
-            >
-              Quản lý nhóm thiết bị
-            </div>
-          </div>
-        </BoxFilter>
-      </Box>
       <ContentTable>
+        <Box>
+          <BoxFilter
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              gap: 15,
+              alignItems: "center",
+            }}
+          >
+            <div className="wrapper-filter">
+              <Select
+                allowClear
+                style={{ width: "200px" }}
+                // defaultValue={filterData.LoaiSuKien}
+                placeholder={"Nhóm thiết bị"}
+                onChange={(value) => onFilter(value, "Status")}
+              >
+                <Option value={true}>Đang sử dụng</Option>
+                <Option value={false}>Không sử dụng</Option>
+              </Select>
+              <InputSearch
+                defaultValue={filterData?.Keyword}
+                placeholder={"Tìm kiếm"}
+                style={{ width: 410 }}
+                onSearch={(value) => onFilter(value, "Keyword")}
+                allowClear
+                className="input-search"
+              />
+            </div>
+            <div style={{ display: "flex" }} onClick={showModalAdd}>
+              <SettingIcon />
+              <div
+                style={{
+                  fontSize: "20px",
+                  fontWeight: 600,
+                  color: "#FFFFFF",
+                  marginTop: "5px",
+                  marginLeft: "10px",
+                  cursor: "context-menu",
+                }}
+              >
+                Quản lý nhóm thiết bị
+              </div>
+            </div>
+          </BoxFilter>
+        </Box>
+
         <div className="table-content">
           {paginatedData?.length > 0 ? (
             <div
@@ -326,24 +335,24 @@ const QuanLyManHinh = (props) => {
           onChange={handlePageChange}
           showSizeChanger={false}
         />
-      </ContentTable>
 
-      <ModalAddEdit
-        visible={visibleModalAddEdit}
-        dataEdit={dataModalAddEdit}
-        action={action}
-        loading={confirmLoading}
-        onCancel={hideModalAddEdit}
-      />
-      <ModalAddThietBi
-        visible={visibleModalAddThietBi}
-        action={action}
-        onCancel={hideModalAddThietBi}
-        manHinhID={manHinhID}
-        setNhomManHinhID={setNhomManHinhID}
-        NhomManHinhID={NhomManHinhID}
-        setfetchData={setfetchData}
-      />
+        <ModalAddEdit
+          visible={visibleModalAddEdit}
+          dataEdit={dataModalAddEdit}
+          action={action}
+          loading={confirmLoading}
+          onCancel={hideModalAddEdit}
+        />
+        <ModalAddThietBi
+          visible={visibleModalAddThietBi}
+          action={action}
+          onCancel={hideModalAddThietBi}
+          manHinhID={manHinhID}
+          setNhomManHinhID={setNhomManHinhID}
+          NhomManHinhID={NhomManHinhID}
+          setfetchData={setfetchData}
+        />
+      </ContentTable>
     </LayoutWrapper>
   );
 };

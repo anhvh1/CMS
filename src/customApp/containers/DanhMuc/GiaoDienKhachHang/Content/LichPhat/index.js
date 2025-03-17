@@ -39,6 +39,7 @@ import dayjs from "dayjs";
 import moment from "moment";
 
 import PageWrap from "../../../../../../components/utility/PageWrap";
+import { FilterWrap } from "./index.styled";
 const QLLichPhat = (props) => {
   // const [filterData, setFilterData] = useState(
   //   queryString.parse(props.location.search),
@@ -355,33 +356,17 @@ const QLLichPhat = (props) => {
   const hideSelect = ListNguoiDung !== 18;
   return (
     <LayoutWrapper>
-      <PageWrap>
-        {/* <PageHeader>Quản lý lịch phát</PageHeader> */}
-        <PageAction>
-          {/* {role ? (
-            role.add ? ( */}
-          {/* <Button type="primary" onClick={showModalAdd}>
-            <PlusOutlined />
-            Thêm mới
-          </Button> */}
-
-          {/* ) : (
-              ''
-            )
-          ) : (
-            ''
-          )} */}
-        </PageAction>
-      </PageWrap>
       <Box>
-        <BoxFilter style={{ display: "flex", justifyContent: "space-between" }}>
-          <div>
+        <BoxFilter
+          style={{ display: "flex", justifyContent: "space-between", gap: 15 }}
+        >
+          <FilterWrap className="wrapper-filter">
             {!hideSelect && (
               <TreeSelect
                 showSearch
                 treeData={DanhSachCoQuan}
                 onChange={(value) => onFilter(value, "CoQuanID")}
-                style={{ width: 400 }}
+                style={{ width: 200 }}
                 dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
                 placeholder="Chọn cơ quan"
                 allowClear
@@ -389,11 +374,12 @@ const QLLichPhat = (props) => {
                 // onChange={value => this.onSearch(value, "CoQuanID")}
                 notFoundContent={"Không có dữ liệu"}
                 treeNodeFilterProp={"title"}
+                className="treeSelect"
               />
             )}
             <Select
               allowClear
-              style={{ width: "200px" ,marginRight: "10px" }}
+              style={{ width: "200px" }}
               defaultValue={filterData.LoaiSuKien}
               placeholder={"Loại sư kiện"}
               onChange={(value) => onFilter(value, "LoaiSuKien")}
@@ -404,7 +390,7 @@ const QLLichPhat = (props) => {
             </Select>
             <Select
               allowClear
-              style={{ width: "200px" ,marginRight: "10px" }}
+              style={{ width: "200px" }}
               defaultValue={filterData.ID}
               placeholder={"Màn hình"}
               onChange={(value, item) => {
@@ -431,7 +417,7 @@ const QLLichPhat = (props) => {
 
             <Select
               allowClear
-              style={{ width: "200px" ,marginRight: "10px" }}
+              style={{ width: "200px" }}
               defaultValue={filterData.title}
               placeholder={"Nhóm màn hình"}
               onChange={(value, item) => {
@@ -458,11 +444,12 @@ const QLLichPhat = (props) => {
             <InputSearch
               defaultValue={filterData.Keyword}
               placeholder={"Nhập tên sự kiện"}
-              style={{ width: 300 }}
+              style={{ width: 410 }}
               onSearch={(value) => onFilter(value, "Keyword")}
               allowClear
+              className="search"
             />
-          </div>
+          </FilterWrap>
           <div
             style={{ color: "white", cursor: "context-menu" }}
             onClick={showModalAdd}

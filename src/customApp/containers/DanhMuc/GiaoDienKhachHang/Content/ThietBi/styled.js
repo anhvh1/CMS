@@ -2,11 +2,30 @@ import styled from "styled-components";
 
 export const ContentTable = styled.div`
   width: 100%;
+  .wrapper-filter {
+    display: flex;
+    gap: 10px;
+    @media screen and (max-width: 750px) {
+      width: 100%;
+      .input-search {
+        flex: 1;
+        width: 100% !important;
+      }
+    }
+    @media screen and (max-width: 500px) {
+      width: 100%;
+      flex-wrap: wrap;
+      & > * {
+        flex-basis: 100%;
+      }
+    }
+  }
   .table-columns {
     display: flex;
     width: 100%;
     justify-content: space-between;
     gap: 16px; /* Khoảng cách giữa các cột */
+    flex-wrap: wrap;
   }
   .table-columns.two-items {
     justify-content: flex-start; /* Không sử dụng space-between khi có 2 giá trị */
@@ -20,6 +39,12 @@ export const ContentTable = styled.div`
     display: flex;
     height: 400px;
     color: #ffffffcc;
+    @media screen and (max-width: 1300px) {
+      max-width: 50%;
+    }
+    @media screen and (max-width: 900px) {
+      max-width: 100%;
+    }
   }
   .table-columns-left {
     width: 30%;

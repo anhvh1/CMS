@@ -51,6 +51,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { InputSearch } from "../../../../components/uielements/input";
 import { formDataCaller } from "../../../../api/formDataCaller";
 import actionsCoQuan from "../../../redux/DanhMuc/DMCoQuan/actions";
+import { WrapperContent } from "./styled";
 import {
   _debounce,
   getInfoFromToken,
@@ -837,87 +838,91 @@ const DMChiTieu = (props) => {
         </PageAction>
       </PageWrap>
 
-      <Box style={{ float: "left", width: "15%" }}>
-        <div
-          style={{
-            maxWidth: "100%",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-            color: "#FFFFFF",
-            fontSize: "16px",
-            padding: "20px 20px 20px 6px",
-          }}
-        >
-          <Checkbox
-            style={{
-              color: "#FFFFFF",
-              fontSize: "16px",
-            }}
-            checked={checked}
-            onChange={onCheckboxChange}
-          >
-            Tất cả thư mục
-          </Checkbox>
-        </div>
-        <div
-          key={treeKey}
-          style={{
-            userSelect: "none",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-          }}
-          className="mg-top"
-        >
-          {renderContent()}
-        </div>
+      <Box>
+        <WrapperContent className="wrap-content">
+          <div>
+            <div
+              style={{
+                maxWidth: "100%",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                color: "#FFFFFF",
+                fontSize: "16px",
+                padding: "20px 20px 20px 6px",
+              }}
+            >
+              <Checkbox
+                style={{
+                  color: "#FFFFFF",
+                  fontSize: "16px",
+                }}
+                checked={checked}
+                onChange={onCheckboxChange}
+              >
+                Tất cả thư mục
+              </Checkbox>
+            </div>
+            <div
+              key={treeKey}
+              style={{
+                userSelect: "none",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+              className="mg-top"
+            >
+              {renderContent()}
+            </div>
+          </div>
+          <div>
+            <BoxFilter>
+              <Select
+                defaultValue={filterData.Loai ? filterData.Loai : null}
+                placeholder="Loại"
+                onChange={(value) => onFilter(value, "Loai")}
+                style={{ width: 200 }}
+                allowClear
+              >
+                <Option value={1}>Hình ảnh</Option>
+                <Option value={2}>Video</Option>
+              </Select>
+              <Select
+                defaultValue={filterData.Status ? filterData.Status : null}
+                placeholder="Trạng thái"
+                onChange={(value) => onFilter(value, "Status")}
+                style={{ width: 200 }}
+              >
+                <Option value={true}>Đang sử dụng</Option>
+                <Option value={false}>Không sử dụng</Option>
+              </Select>
+              <InputSearch
+                allowClear
+                defaultValue={filterData.Keyword}
+                placeholder="Tìm kiếm theo tên "
+                onSearch={(value) => onFilter(value, "Keyword")}
+                style={{ width: 300 }}
+              />
+            </BoxFilter>
+            <BoxTable
+              columns={columns}
+              dataSource={DanhSachMedia}
+              onChange={onTableChange}
+              pagination={{
+                showSizeChanger: true,
+                showTotal: (total, range) =>
+                  `Từ ${range[0]} đến ${range[1]} trên ${total} kết quả`,
+                total: TotalRow,
+                current: PageNumber,
+                pageSize: PageSize,
+              }}
+              rowKey={(record) => record.ID}
+            />
+          </div>
+        </WrapperContent>
       </Box>
 
-      <Box style={{ float: "left", width: "85%" }}>
-        <BoxFilter>
-          <Select
-            defaultValue={filterData.Loai ? filterData.Loai : null}
-            placeholder="Loại"
-            onChange={(value) => onFilter(value, "Loai")}
-            style={{ width: 200 }}
-            allowClear
-          >
-            <Option value={1}>Hình ảnh</Option>
-            <Option value={2}>Video</Option>
-          </Select>
-          <Select
-            defaultValue={filterData.Status ? filterData.Status : null}
-            placeholder="Trạng thái"
-            onChange={(value) => onFilter(value, "Status")}
-            style={{ width: 200 }}
-          >
-            <Option value={true}>Đang sử dụng</Option>
-            <Option value={false}>Không sử dụng</Option>
-          </Select>
-          <InputSearch
-            allowClear
-            defaultValue={filterData.Keyword}
-            placeholder="Tìm kiếm theo tên "
-            onSearch={(value) => onFilter(value, "Keyword")}
-            style={{ width: 300 }}
-          />
-        </BoxFilter>
-        <BoxTable
-          columns={columns}
-          dataSource={DanhSachMedia}
-          onChange={onTableChange}
-          pagination={{
-            showSizeChanger: true,
-            showTotal: (total, range) =>
-              `Từ ${range[0]} đến ${range[1]} trên ${total} kết quả`,
-            total: TotalRow,
-            current: PageNumber,
-            pageSize: PageSize,
-          }}
-          rowKey={(record) => record.ID}
-        />
-      </Box>
       <ModalEdit
         confirmLoading={confirmLoading}
         visible={visibleModalAddEdit}

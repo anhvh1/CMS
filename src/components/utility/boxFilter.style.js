@@ -1,17 +1,37 @@
-import styled from 'styled-components';
-import WithDirection from '../../settings/withDirection';
+import styled from "styled-components";
+import WithDirection from "../../settings/withDirection";
 
 const WDComponentDivFilter = styled.div`
-  padding-bottom: ${(props) => (props.isIframe ? '' : '10px')};
-  margin-top: 5px;
+  padding-bottom: ${(props) => (props.isIframe ? "" : "10px")};
+  margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
   justify-content: start;
   gap: 10px;
-  
-  display: ${(props) => (props?.isCenter ? 'flex' : '')};
-  justify-content: ${(props) => (props?.isCenter ? 'center' : '')};
-  gap: ${(props) => (props?.isCenter ? '5px' : '')};
+
+  display: ${(props) => (props?.isCenter ? "flex" : "")};
+  justify-content: ${(props) => (props?.isCenter ? "center" : "")};
+  gap: ${(props) => (props?.isCenter ? "5px" : "")};
+
+  @media screen and (max-width: 900px) {
+    & > *:not(.wrapper-filter) {
+      flex-basis: calc(50% - 5px);
+    }
+    & .ant-input-search:nth-child(odd) {
+      flex-basis: 100%;
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+    & > *:not(.wrapper-filter) {
+      flex-basis: 100%;
+    }
+  }
+  /* @media screen and (max-width: 500px) {
+    & > * {
+      flex-basis: 100%;
+    }
+  } */
 
   ${(props) =>
     props.hienthi &&
